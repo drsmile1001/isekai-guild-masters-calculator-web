@@ -1,0 +1,33 @@
+stages:
+  - build
+  - deploy
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^production\/.+/
+      variables:
+        DEPLOY_PATH: /srv/nginx/www/isekai-guild-masters-calculator
+
+build:
+  stage: build
+  image: node:lts-alpine
+  script:
+    - yarn install
+    - yarn build
+  artifacts:
+    paths:
+      - dist
+  tags:
+    - docker
+
+# deploy:
+#   stage: deploy
+#   variables:
+#     GIT_STRATEGY: none
+#   script:
+#     - sudo rm -rf $DEPLOY_PATH/*
+#     - sudo cp -r dist/* $DEPLOY_PATH
+#     - sudo chmod -R 755 $DEPLOY_PATH
+#   tags:
+#     - shell
+#     - drsmile
