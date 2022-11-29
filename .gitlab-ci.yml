@@ -20,14 +20,14 @@ build:
   tags:
     - docker
 
-# deploy:
-#   stage: deploy
-#   variables:
-#     GIT_STRATEGY: none
-#   script:
-#     - sudo rm -rf $DEPLOY_PATH/*
-#     - sudo cp -r dist/* $DEPLOY_PATH
-#     - sudo chmod -R 755 $DEPLOY_PATH
-#   tags:
-#     - shell
-#     - drsmile
+deploy:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - sudo rm -rf $DEPLOY_PATH/*
+    - sudo cp -r dist/* $DEPLOY_PATH
+    - sudo chmod -R 755 $DEPLOY_PATH
+  tags:
+    - shell
+    - drsmile-server
