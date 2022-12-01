@@ -4,14 +4,25 @@
   </h1>
   <div v-for="scoring in scoringStore.scorings">
     <div v-if="scoring instanceof FixScoring" class="flex justify-between mb-2">
-      <h2 class="px-4 py-1">{{ scoring.title }}</h2>
-      <div class="px-4 py-1"><ElInputNumber v-model="scoring.score" /></div>
+      <h2 class="px-4">{{ scoring.title }}</h2>
+      <div class="px-4"><ElInputNumber v-model="scoring.score" /></div>
     </div>
-    <div v-if="scoring instanceof IndexPlusScoring">
-      <span>{{ scoring.indexType }}</span>
-      <span>每 {{ scoring.perPlusPointNeedIndexes }} 個加 1 分</span>
-      <input type="number" v-model="scoring.index" />
-      <button @click="scoringStore.removeScoring(scoring)">刪除</button>
+    <div v-if="scoring instanceof IndexPlusScoring" class="mb-2">
+      <div class="px-4 flex justify-between">
+        <h2>{{ scoring.title }} (+{{ scoring.baseScore }})</h2>
+        <ElButton @click="scoringStore.removeScoring(scoring)">移除</ElButton>
+      </div>
+      <div class="flex justify-between">
+        <span class="px-4 py-1 text-sm"
+          >{{ scoring.indexType }}
+          {{
+            scoring.perPlusPointNeedIndexes > 1
+              ? `(+1/${scoring.perPlusPointNeedIndexes})`
+              : `(+${1 / scoring.perPlusPointNeedIndexes}/1)`
+          }}</span
+        >
+        <div class="px-4 py-1"><ElInputNumber v-model="scoring.index" /></div>
+      </div>
     </div>
   </div>
   <h2>新增動態分數</h2>
