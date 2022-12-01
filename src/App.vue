@@ -83,8 +83,10 @@
 
 <script setup lang="ts">
   import { ref } from "vue"
-  import { useScoringStore, FixScoring, IndexPlusScoring } from "./Scoring"
-  import { scoringCards } from "./ScoringCards"
+  import { useScoringStore } from "./ScoringStore"
+  import { scoringCards } from "./DynamicScoringMethod"
+  import { FixScoring } from "./FixScoring"
+  import { IndexPlusScoring } from "./IndexPlusScoring"
 
   const scoringStore = useScoringStore()
   const selectedScoringCard = ref("")
