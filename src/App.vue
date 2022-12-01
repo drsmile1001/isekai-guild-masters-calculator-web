@@ -25,13 +25,39 @@
       </div>
     </div>
   </div>
-  <h2>新增動態分數</h2>
-  <select v-model="selectedScoringCard">
-    <option v-for="scoringCard in scoringCards" :value="scoringCard.id">
-      {{ scoringCard.id }} {{ scoringCard.title }}
-    </option>
-  </select>
-  <button @click="scoringStore.addScoring(selectedScoringCard)">新增</button>
+  <div class="text-right pr-4">
+    <ElButton
+      @click="
+        () => {
+          showAddScoring = true
+        }
+      "
+      >新增動態計分項目</ElButton
+    >
+  </div>
+  <ElDrawer v-model="showAddScoring" title="新增動態計分項目" direction="btt">
+    <div class="flex justify-between">
+      <ElSelect v-model="selectedScoringCard">
+        <ElOption
+          v-for="scoringCard in scoringCards"
+          :value="scoringCard.id"
+          :key="scoringCard.id"
+          :label="`${scoringCard.id} ${scoringCard.title}`"
+        >
+        </ElOption>
+      </ElSelect>
+      <ElButton
+        @click="
+          () => {
+            scoringStore.addScoring(selectedScoringCard)
+            showAddScoring = false
+          }
+        "
+      >
+        新增
+      </ElButton>
+    </div>
+  </ElDrawer>
   <div class="flex justify-between">
     <h1 class="px-2 py-4 text-2xl">總分</h1>
     <span class="px-2 py-4 text-2xl">{{ scoringStore.totalScore }}</span>
@@ -45,4 +71,5 @@
 
   const scoringStore = useScoringStore()
   const selectedScoringCard = ref("")
+  const showAddScoring = ref(false)
 </script>
