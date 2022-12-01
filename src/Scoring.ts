@@ -3,6 +3,20 @@ import { computed, ref } from "vue"
 import { scoringCards } from "./ScoringCards"
 
 export const useScoringStore = defineStore("scoring", () => {
+  const globalIndex = ref<Map<string, number>>(
+    new Map([
+      ["桌面的事件卡", 0],
+      ["迷宮板塊", 0],
+      ["深淵洞穴", 0],
+      ["據點", 0],
+      ["生活", 0],
+      ["商業", 0],
+      ["零件", 0],
+      ["力量", 0],
+      ["藥水", 0],
+    ])
+  )
+
   const scorings = ref<Scoring[]>([
     new FixScoring("事件卡"),
     new FixScoring("王權"),
@@ -38,6 +52,7 @@ export const useScoringStore = defineStore("scoring", () => {
     totalScore,
     removeScoring,
     addScoring,
+    globalIndex,
   }
 })
 
@@ -62,7 +77,19 @@ export class IndexPlusScoring implements Scoring {
   baseScore: number
   perPlusPointNeedIndexes: number
   indexType: string
-  index = 0
+  localIndex = 0
+
+  get index() {
+    return useScoringStore().globalIndex.get(this.indexType) ?? this.localIndex
+  }
+
+  set index(value: number) {
+    if (useScoringStore().globalIndex.has(this.indexType)) {
+      useScoringStore().globalIndex.set(this.indexType, value)
+    } else {
+      this.localIndex = value
+    }
+  }
   maxScore: number | null = null
   scoring() {
     const plusPoint = Math.floor(this.index / this.perPlusPointNeedIndexes)
