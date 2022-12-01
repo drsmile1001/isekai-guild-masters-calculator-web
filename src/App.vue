@@ -1,9 +1,11 @@
 <template>
-  <h1>固定分數型</h1>
+  <h1 class="text-center py-4 mb-2 text-3xl bg-blue-400 text-white">
+    異世界公會長 分數計算機
+  </h1>
   <div v-for="scoring in scoringStore.scorings">
-    <div>{{ scoring.title }}</div>
-    <div v-if="scoring instanceof FixScoring">
-      <input type="number" v-model="scoring.score" />
+    <div v-if="scoring instanceof FixScoring" class="flex justify-between mb-2">
+      <h2 class="px-4 py-1">{{ scoring.title }}</h2>
+      <div class="px-4 py-1"><ElInputNumber v-model="scoring.score" /></div>
     </div>
     <div v-if="scoring instanceof IndexPlusScoring">
       <span>{{ scoring.indexType }}</span>
@@ -12,15 +14,17 @@
       <button @click="scoringStore.removeScoring(scoring)">刪除</button>
     </div>
   </div>
-  <h1>新增動態分數</h1>
+  <h2>新增動態分數</h2>
   <select v-model="selectedScoringCard">
     <option v-for="scoringCard in scoringCards" :value="scoringCard.id">
       {{ scoringCard.id }} {{ scoringCard.title }}
     </option>
   </select>
   <button @click="scoringStore.addScoring(selectedScoringCard)">新增</button>
-  <h1>總分</h1>
-  {{ scoringStore.totalScore }}
+  <div class="flex justify-between">
+    <h1 class="px-2 py-4 text-2xl">總分</h1>
+    <span class="px-2 py-4 text-2xl">{{ scoringStore.totalScore }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">

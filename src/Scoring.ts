@@ -50,7 +50,9 @@ export interface ScoreBase {
 export class FixScoring implements ScoreBase {
   id: string
   score = 0
-  scoring = () => this.score
+  scoring() {
+    return this.score
+  }
   constructor(public title: string) {
     this.id = title
   }
