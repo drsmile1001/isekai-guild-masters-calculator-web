@@ -2,7 +2,7 @@ import { Scoring } from "./Scoring"
 import { useScoringStore } from "./ScoringStore"
 
 export class AchievementPlusScoring implements Scoring {
-  baseValue: number
+  baseScore: number
   achievements: {
     indexType: string
     indexThreadhold: number
@@ -11,10 +11,13 @@ export class AchievementPlusScoring implements Scoring {
 
   scoring() {
     const globalIndex = useScoringStore().globalIndex
-    return this.achievements
-      .filter((a) => globalIndex.get(a.indexType) ?? 0 >= a.indexThreadhold)
-      .map((a) => a.score)
-      .reduce((total, score) => total + score, this.baseValue)
+    return (
+      this.baseScore +
+      this.achievements
+        .filter((a) => (globalIndex.get(a.indexType) ?? 0) >= a.indexThreadhold)
+        .map((a) => a.score)
+        .reduce((total, score) => total + score, 0)
+    )
   }
 
   constructor(
@@ -27,7 +30,7 @@ export class AchievementPlusScoring implements Scoring {
       score: number
     }[]
   ) {
-    this.baseValue = baseValue
+    this.baseScore = baseValue
     this.achievements = achievements
   }
 }

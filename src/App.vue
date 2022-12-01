@@ -34,6 +34,39 @@
           </div>
         </div>
       </div>
+      <div v-if="scoring instanceof AchievementPlusScoring" class="mb-2">
+        <div class="px-4 flex justify-between">
+          <h2>{{ scoring.title }} (+{{ scoring.baseScore }})</h2>
+          <ElButton @click="scoringStore.removeScoring(scoring)" size="large"
+            >移除</ElButton
+          >
+        </div>
+        <div
+          class="flex justify-between"
+          v-for="achievement in scoring.achievements"
+        >
+          <span class="px-4 py-1 text-sm"
+            >{{ achievement.indexType }} >={{
+              achievement.indexThreadhold
+            }}
+            (+{{ achievement.score }})</span
+          >
+          <div class="px-4 py-1">
+            <ElInputNumber
+              :model-value="scoringStore.globalIndex.get(achievement.indexType)"
+              @change="
+                (value) => {
+                  scoringStore.globalIndex.set(
+                    achievement.indexType,
+                    value ?? 0
+                  )
+                }
+              "
+              size="large"
+            />
+          </div>
+        </div>
+      </div>
     </div>
     <div class="text-right pr-4">
       <ElButton
@@ -87,6 +120,7 @@
   import { scoringCards } from "./DynamicScoringMethod"
   import { FixScoring } from "./FixScoring"
   import { IndexPlusScoring } from "./IndexPlusScoring"
+  import { AchievementPlusScoring } from "./AchievementPlusScoring"
 
   const scoringStore = useScoringStore()
   const selectedScoringCard = ref("")
