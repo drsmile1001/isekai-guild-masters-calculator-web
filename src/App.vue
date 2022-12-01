@@ -5,12 +5,16 @@
   <div v-for="scoring in scoringStore.scorings">
     <div v-if="scoring instanceof FixScoring" class="flex justify-between mb-2">
       <h2 class="px-4">{{ scoring.title }}</h2>
-      <div class="px-4"><ElInputNumber v-model="scoring.score" /></div>
+      <div class="px-4">
+        <ElInputNumber v-model="scoring.score" size="large" />
+      </div>
     </div>
     <div v-if="scoring instanceof IndexPlusScoring" class="mb-2">
       <div class="px-4 flex justify-between">
         <h2>{{ scoring.title }} (+{{ scoring.baseScore }})</h2>
-        <ElButton @click="scoringStore.removeScoring(scoring)">移除</ElButton>
+        <ElButton @click="scoringStore.removeScoring(scoring)" size="large"
+          >移除</ElButton
+        >
       </div>
       <div class="flex justify-between">
         <span class="px-4 py-1 text-sm"
@@ -21,12 +25,15 @@
               : `(+${1 / scoring.perPlusPointNeedIndexes}/1)`
           }}</span
         >
-        <div class="px-4 py-1"><ElInputNumber v-model="scoring.index" /></div>
+        <div class="px-4 py-1">
+          <ElInputNumber v-model="scoring.index" size="large" />
+        </div>
       </div>
     </div>
   </div>
   <div class="text-right pr-4">
     <ElButton
+      size="large"
       @click="
         () => {
           showAddScoring = true
@@ -37,7 +44,7 @@
   </div>
   <ElDrawer v-model="showAddScoring" title="新增動態計分項目" direction="btt">
     <div class="flex justify-between">
-      <ElSelect v-model="selectedScoringCard">
+      <ElSelect v-model="selectedScoringCard" size="large">
         <ElOption
           v-for="scoringCard in scoringCards"
           :value="scoringCard.id"
@@ -47,6 +54,7 @@
         </ElOption>
       </ElSelect>
       <ElButton
+        size="large"
         @click="
           () => {
             scoringStore.addScoring(selectedScoringCard)
