@@ -1,19 +1,27 @@
 import { AchievementPlusScoring } from "./AchievementPlusScoring"
 import { IndexPlusScoring } from "./IndexPlusScoring"
 import { Scoring } from "./Scoring"
+import { useScoringStore } from "./ScoringStore"
+
+export class D005Scoring implements Scoring {
+  id = "D-005"
+  title = "吟遊詩人的傳唱"
+  scoring() {
+    const indexes = useScoringStore().globalIndex
+    return Math.min(
+      indexes.get("生活標籤") ?? 0,
+      indexes.get("商業標籤") ?? 0,
+      indexes.get("廢品標籤") ?? 0
+    )
+  }
+}
 
 export const scoringCards: Scoring[] = [
   new IndexPlusScoring("D-001", "異世界拉麵食堂", 1, "卡面上的冒險者", 2),
   new IndexPlusScoring("D-002", "老舊的放映機", 0, "桌面的事件卡", 3, 6),
   new IndexPlusScoring("D-003", "聖女親衛隊", 0, "深淵洞穴", 1),
   new IndexPlusScoring("D-004", "迷宮開拓村", 2, "卡面上的冒險者", 0.5),
-  new IndexPlusScoring(
-    "D-005",
-    "吟遊詩人的傳唱",
-    0,
-    "生活商業零件之中持有數量最少的標記",
-    1
-  ),
+  new D005Scoring(),
   new IndexPlusScoring("D-006", "設立冒險者學校", 0, "迷宮板塊", 2),
   new AchievementPlusScoring("D-007", "迷宮祕寶館", 1, [
     { indexType: "廢品標籤", indexThreadhold: 5, score: 2 },

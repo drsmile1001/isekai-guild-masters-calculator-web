@@ -3,7 +3,7 @@
     <h1 class="text-center py-4 mb-2 text-3xl bg-blue-400 text-white">
       異世界公會長 分數計算機
     </h1>
-    <div v-for="scoring in scoringStore.scorings">
+    <div v-for="scoring in scoringStore.scorings" class="mb-2">
       <div
         v-if="scoring instanceof FixScoring"
         class="flex justify-between mb-2"
@@ -13,7 +13,7 @@
           <ElInputNumber v-model="scoring.score" size="large" />
         </div>
       </div>
-      <div v-if="scoring instanceof IndexPlusScoring" class="mb-2">
+      <div v-if="scoring instanceof IndexPlusScoring">
         <div class="px-4 flex justify-between">
           <h2>{{ scoring.title }} (+{{ scoring.baseScore }})</h2>
           <ElButton @click="scoringStore.removeScoring(scoring)" size="large"
@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div v-if="scoring instanceof AchievementPlusScoring" class="mb-2">
+      <div v-if="scoring instanceof AchievementPlusScoring">
         <div class="px-4 flex justify-between">
           <h2>{{ scoring.title }} (+{{ scoring.baseScore }})</h2>
           <ElButton @click="scoringStore.removeScoring(scoring)" size="large"
@@ -60,6 +60,59 @@
                     achievement.indexType,
                     value ?? 0
                   )
+                }
+              "
+              size="large"
+            />
+          </div>
+        </div>
+      </div>
+      <div v-if="scoring instanceof D005Scoring">
+        <div class="px-4 flex justify-between">
+          <h2>{{ scoring.title }} (+0)</h2>
+          <ElButton @click="scoringStore.removeScoring(scoring)" size="large"
+            >移除</ElButton
+          >
+        </div>
+        <span class="px-4 py-1 text-sm"
+          >(+min(生活標籤, 商業標籤, 廢品標籤))</span
+        >
+        <div class="flex justify-between">
+          <span class="px-4 py-1 text-sm">生活標籤</span>
+          <div class="px-4 py-1">
+            <ElInputNumber
+              :model-value="scoringStore.globalIndex.get('生活標籤')"
+              @change="
+                (value) => {
+                  scoringStore.globalIndex.set('生活標籤', value ?? 0)
+                }
+              "
+              size="large"
+            />
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <span class="px-4 py-1 text-sm">商業標籤</span>
+          <div class="px-4 py-1">
+            <ElInputNumber
+              :model-value="scoringStore.globalIndex.get('商業標籤')"
+              @change="
+                (value) => {
+                  scoringStore.globalIndex.set('商業標籤', value ?? 0)
+                }
+              "
+              size="large"
+            />
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <span class="px-4 py-1 text-sm">廢品標籤</span>
+          <div class="px-4 py-1">
+            <ElInputNumber
+              :model-value="scoringStore.globalIndex.get('廢品標籤')"
+              @change="
+                (value) => {
+                  scoringStore.globalIndex.set('廢品標籤', value ?? 0)
                 }
               "
               size="large"
@@ -117,7 +170,7 @@
 <script setup lang="ts">
   import { ref } from "vue"
   import { useScoringStore } from "./ScoringStore"
-  import { scoringCards } from "./DynamicScoringMethod"
+  import { scoringCards, D005Scoring } from "./DynamicScoringMethod"
   import { FixScoring } from "./FixScoring"
   import { IndexPlusScoring } from "./IndexPlusScoring"
   import { AchievementPlusScoring } from "./AchievementPlusScoring"

@@ -27,6 +27,7 @@ export const useScoringStore = defineStore("scoring", () => {
     new FixScoring("地圖板塊"),
     new FixScoring("地圖格"),
     new FixScoring("看板娘"),
+    new FixScoring("其他"),
   ])
 
   function getTotalScore() {
@@ -37,6 +38,8 @@ export const useScoringStore = defineStore("scoring", () => {
   }
 
   function addScoring(id: string) {
+    const alreadyExist = scorings.value.find((scoring) => scoring.id === id)
+    if (alreadyExist) return
     const scoring = scoringCards.find((card) => card.id === id)
     if (!scoring) return
     scorings.value.push(scoring)
