@@ -48,7 +48,11 @@
     </div>
     <ElDrawer v-model="showAddScoring" title="新增動態計分項目" direction="btt">
       <div class="flex justify-between">
-        <ElSelect v-model="selectedScoringCard" size="large">
+        <ElSelect
+          v-model="selectedScoringCard"
+          size="large"
+          placeholder="選擇卡片"
+        >
           <ElOption
             v-for="scoringCard in scoringCards"
             :value="scoringCard.id"

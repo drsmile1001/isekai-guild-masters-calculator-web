@@ -65,4 +65,8 @@ export const scoringCards: ScoringCard[] = [
   new IndexPlusScoringCard("E-009", "傳奇旅行商人費蕾茲", 1, "商業", 2),
   new IndexPlusScoringCard("E-010", "勇者蘿謝特", 1, "迷宮板塊", 2),
   new IndexPlusScoringCard("E-011", "流浪魔女歐貝拉", 1, "藥水", 2, 5),
+  new IndexPlusScoringCard("R-003", "地城保險", 1, "商業", 2),
+  new IndexPlusScoringCard("R-014", "空白的百科全書", 1, "零件", 2),
+  new IndexPlusScoringCard("R-013", "聖艾爾摩之火", 1, "生活", 2),
+  new IndexPlusScoringCard("R-011", "今天公會也盛況空前！", 1, "迷宮板塊", 2),
 ]
