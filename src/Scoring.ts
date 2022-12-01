@@ -3,7 +3,7 @@ import { computed, ref } from "vue"
 import { scoringCards } from "./ScoringCards"
 
 export const useScoringStore = defineStore("scoring", () => {
-  const scorings = ref<ScoreBase[]>([
+  const scorings = ref<Scoring[]>([
     new FixScoring("事件卡"),
     new FixScoring("王權"),
     new FixScoring("寶藏"),
@@ -26,7 +26,7 @@ export const useScoringStore = defineStore("scoring", () => {
     scorings.value.push(scoring)
   }
 
-  function removeScoring(scoring: ScoreBase) {
+  function removeScoring(scoring: Scoring) {
     scorings.value = scorings.value.filter((s) => s.id !== scoring.id)
   }
 
@@ -41,13 +41,13 @@ export const useScoringStore = defineStore("scoring", () => {
   }
 })
 
-export interface ScoreBase {
+export interface Scoring {
   id: string
   title: string
   scoring: () => number
 }
 
-export class FixScoring implements ScoreBase {
+export class FixScoring implements Scoring {
   id: string
   score = 0
   scoring() {
@@ -58,14 +58,17 @@ export class FixScoring implements ScoreBase {
   }
 }
 
-export class IndexPlusScoring implements ScoreBase {
+export class IndexPlusScoring implements Scoring {
   baseScore: number
   perPlusPointNeedIndexes: number
   indexType: string
   index = 0
+  maxScore: number | null = null
   scoring() {
+    const plusPoint = Math.floor(this.index / this.perPlusPointNeedIndexes)
     return (
-      this.baseScore + Math.floor(this.index / this.perPlusPointNeedIndexes)
+      this.baseScore +
+      (this.maxScore === null ? plusPoint : Math.min(plusPoint, this.maxScore!))
     )
   }
 
@@ -74,15 +77,17 @@ export class IndexPlusScoring implements ScoreBase {
     public title: string,
     baseScore: number,
     perPlusPointNeedIndexes: number,
-    indexType: string
+    indexType: string,
+    maxScore: number | null = null
   ) {
     this.baseScore = baseScore
     this.perPlusPointNeedIndexes = perPlusPointNeedIndexes
     this.indexType = indexType
+    this.maxScore = maxScore
   }
 }
 
-export class AchievementPlusScoring implements ScoreBase {
+export class AchievementPlusScoring implements Scoring {
   baseValue: number
   achievements = ref<
     {
