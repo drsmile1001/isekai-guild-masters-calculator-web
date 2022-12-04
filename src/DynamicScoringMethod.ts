@@ -17,7 +17,7 @@ export class D005Scoring implements Scoring {
 }
 
 export const scoringCards: Scoring[] = [
-  new IndexPlusScoring("D-001", "異世界拉麵食堂", 1, "卡面上的冒險者", 2),
+  new IndexPlusScoring("D-001", "異世界拉麵食堂", 1, "卡面上的冒險者", 0.5),
   new IndexPlusScoring("D-002", "老舊的放映機", 0, "桌面的事件卡", 3, 6),
   new IndexPlusScoring("D-003", "聖女親衛隊", 0, "深淵洞穴", 1),
   new IndexPlusScoring("D-004", "迷宮開拓村", 2, "卡面上的冒險者", 0.5),
@@ -39,6 +39,10 @@ export const scoringCards: Scoring[] = [
   new IndexPlusScoring("E-009", "傳奇旅行商人費蕾茲", 1, "商業標籤", 2),
   new IndexPlusScoring("E-010", "勇者蘿謝特", 1, "迷宮板塊", 2),
   new IndexPlusScoring("E-011", "流浪魔女歐貝拉", 1, "藥水", 2, 5),
+  new AchievementPlusScoring("E-016", "木工大匠 加蕾特", 1, [
+    { indexType: "據點", indexThreadhold: 3, score: 2 },
+    { indexType: "生活標籤", indexThreadhold: 5, score: 2 },
+  ]),
   new IndexPlusScoring("R-003", "地城保險", 1, "商業標籤", 2),
   new IndexPlusScoring("R-014", "空白的百科全書", 1, "廢品標籤", 2),
   new IndexPlusScoring("R-013", "聖艾爾摩之火", 1, "生活標籤", 2),
