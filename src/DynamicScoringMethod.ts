@@ -31,6 +31,8 @@ export const scoringCards: Scoring[] = [
     { indexType: "人物標籤", indexThreadhold: 2, score: 2 },
     { indexType: "商業標籤", indexThreadhold: 5, score: 2 },
   ]),
+  new IndexPlusScoring("D-009", "隱藏的公主守衛者", 0, "生活標籤", 2),
+  new IndexPlusScoring("D-011", "聖女的寵愛", 0, "深淵洞穴", 1),
   new IndexPlusScoring("E-002", "夏爾洛特 皇女", 1, "生活標籤", 2),
   new IndexPlusScoring("E-003", "騎士公主 甘娜許", 1, "據點", 1),
   new IndexPlusScoring("E-004", "球形關節少女", 0, "廢品標籤", 2),
